@@ -10,6 +10,8 @@ const reset = () => {
         box.disabled = false; 
         box.innerText = "";
         msgContainer.classList.add("hide");
+        count = 0;
+        win=false;
     }
 }
 
@@ -18,9 +20,11 @@ resetBtn.addEventListener("click", reset);
 const winPatterns = [
     [0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]
 ];
-
+let count=0;
+let win=false;
 boxes.forEach((box) => {
     box.addEventListener("click", () => {
+        count++;
         if(turnO) {
             box.innerText = "O";
             box.classList.remove("color");
@@ -52,10 +56,14 @@ const checkWinner = () => {
 
         if (posVal1 != "" && posVal2 != "" && posVal3 != ""){
             if (posVal1 === posVal2 && posVal2 ===posVal3){
-                console.log ("winner", posVal1);
+                win=true;
                 msg.innerText = `Congratulations, Winner is ${posVal1}`;
                 msgContainer.classList.remove("hide");
                 disable();
+            }
+            if(count===9 && win === false){
+                msg.innerText = "It's a tie! No Winner";
+                msgContainer.classList.remove("hide");
             }
         }
     }
